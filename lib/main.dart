@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'di/locator.dart';
+import 'screens/home_screen.dart';
 
 void main() {
   setupLocator();
-
   runApp(const MyApp());
 }
 
@@ -15,14 +15,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'BookLog',
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('BookLog'),
-        ),
-        body: const Center(
-          child: Text('독서 기록 앱 시작!'),
-        ),
-      ),
+      home: const HomeScreen(),
     );
   }
 }
