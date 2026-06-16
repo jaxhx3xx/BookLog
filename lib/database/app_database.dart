@@ -9,12 +9,29 @@ import 'tables/books.dart';
 
 part 'app_database.g.dart';
 
-@DriftDatabase(tables: [Books]) // 테이블 등록하는 곳
+@DriftDatabase(tables: [Books])
 class LocalDatabase extends _$LocalDatabase {
   LocalDatabase() : super(_openConnection());
 
   @override
   int get schemaVersion => 1;
+
+  // 전체 책 목록 조회
+  Stream<List<Book>> watchBooks() {
+    return select(books).watch();
+  }
+
+  // 책 추가
+  Future<int> createBook(BooksCompanion book) {
+    return into(books).insert(book);
+  }
+
+  // 책 삭제
+  Future<int> deleteBook(int id) {
+    return (delete(books)
+      ..where((tbl) => tbl.id.equals(id)))
+        .go();
+  }
 }
 
 LazyDatabase _openConnection() {
