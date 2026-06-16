@@ -20,7 +20,11 @@ class LocalDatabase extends _$LocalDatabase {
   Stream<List<Book>> watchBooks() {
     return select(books).watch();
   }
-
+  Stream<List<Book>> watchBooksByStatus(String status) {
+    return (select(books)
+      ..where((tbl) => tbl.status.equals(status)))
+        .watch();
+  }
   // 책 추가
   Future<int> createBook(BooksCompanion book) {
     return into(books).insert(book);
@@ -31,6 +35,9 @@ class LocalDatabase extends _$LocalDatabase {
     return (delete(books)
       ..where((tbl) => tbl.id.equals(id)))
         .go();
+  }
+  Future<bool> updateBook(Book book) {
+    return update(books).replace(book);
   }
 }
 
