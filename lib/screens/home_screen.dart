@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../widgets/book_card.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -9,10 +10,21 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('BookLog'),
       ),
-      body: const Center(
-        child: Text(
-          '아직 등록된 책이 없습니다.',
-        ),
+      body: ListView(
+        children: const [
+          BookCard(
+            title: '해리포터',
+            author: 'J.K. 롤링',
+            rating: 5,
+            status: '읽음',
+          ),
+          BookCard(
+            title: '어린 왕자',
+            author: '생텍쥐페리',
+            rating: 4,
+            status: '읽는 중',
+          ),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
