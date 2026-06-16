@@ -24,6 +24,24 @@ class HomeScreen extends StatelessWidget {
             rating: 4,
             status: '읽는 중',
           ),
+          BookCard(
+            title: '데미안',
+            author: '헤르만 헤세',
+            rating: 5,
+            status: '읽음',
+          ),
+          BookCard(
+            title: '불편한 편의점',
+            author: '김호연',
+            rating: 4,
+            status: '읽고 싶어요',
+          ),
+          BookCard(
+            title: '나미야 잡화점의 기적',
+            author: '히가시노 게이고',
+            rating: 5,
+            status: '읽음',
+          ),
         ],
       ),
       floatingActionButton: FloatingActionButton(
