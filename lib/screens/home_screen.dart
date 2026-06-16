@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import '../widgets/book_card.dart';
+import '../database/app_database.dart';
+import '../di/locator.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+  HomeScreen({super.key});
+  final db = getIt<LocalDatabase>();
 
   @override
   Widget build(BuildContext context) {
@@ -10,39 +13,38 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('BookLog'),
       ),
-      body: ListView(
-        children: const [
-          BookCard(
-            title: '해리포터',
-            author: 'J.K. 롤링',
-            rating: 5,
-            status: '읽음',
-          ),
-          BookCard(
-            title: '어린 왕자',
-            author: '생텍쥐페리',
-            rating: 4,
-            status: '읽는 중',
-          ),
-          BookCard(
-            title: '데미안',
-            author: '헤르만 헤세',
-            rating: 5,
-            status: '읽음',
-          ),
-          BookCard(
-            title: '불편한 편의점',
-            author: '김호연',
-            rating: 4,
-            status: '읽고 싶어요',
-          ),
-          BookCard(
-            title: '나미야 잡화점의 기적',
-            author: '히가시노 게이고',
-            rating: 5,
-            status: '읽음',
-          ),
-        ],
+      body: StreamBuilder<List<Book>>(
+        stream: db.watchBooks(),
+        builder: (context, snapshot) {
+
+          if (!snapshot.hasData) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+
+          final books = snapshot.data!;
+
+          if (books.isEmpty) {
+            return const Center(
+              child: Text('아직 등록된 책이 없습니다.'),
+            );
+          }
+
+          return ListView.builder(
+            itemCount: books.length,
+            itemBuilder: (context, index) {
+              final book = books[index];
+
+              return BookCard(
+                title: book.title,
+                author: book.author,
+                rating: book.rating,
+                status: book.status,
+              );
+            },
+          );
+        },
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
