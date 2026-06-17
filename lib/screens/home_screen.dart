@@ -37,11 +37,19 @@ class HomeScreen extends StatelessWidget {
             itemBuilder: (context, index) {
               final book = books[index];
 
-              return BookCard(
-                title: book.title,
-                author: book.author,
-                rating: book.rating,
-                status: book.status,
+              return Dismissible(
+                key: Key(book.id.toString()),
+
+                onDismissed: (_) async {
+                  await db.deleteBook(book.id);
+                },
+
+                child: BookCard(
+                  title: book.title,
+                  author: book.author,
+                  rating: book.rating,
+                  status: book.status,
+                ),
               );
             },
           );

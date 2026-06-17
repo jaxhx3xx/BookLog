@@ -1,9 +1,6 @@
-import '../database/app_database.dart';
-import '../di/locator.dart';
 import 'package:flutter/material.dart';
 import '../database/app_database.dart';
 import '../di/locator.dart';
-import 'package:drift/drift.dart' hide Column;
 
 class AddBookScreen extends StatefulWidget {
   const AddBookScreen({super.key});
@@ -95,10 +92,32 @@ class _AddBookScreenState extends State<AddBookScreen> {
             const SizedBox(height: 15),
 
             ElevatedButton(
-              onPressed: () {},
-              child: const Text('읽은 날짜 선택'),
-            ),
+              onPressed: () async {
 
+                final pickedDate = await showDatePicker(
+                  context: context,
+                  initialDate: DateTime.now(),
+                  firstDate: DateTime(2000),
+                  lastDate: DateTime(2100),
+                );
+
+                if (pickedDate != null) {
+                  setState(() {
+                    selectedDate = pickedDate;
+                  });
+                }
+              },
+
+              child: const Text('읽은 날짜 선택'),
+
+            ),
+            const SizedBox(height: 10),
+
+            Text(
+              selectedDate == null
+                  ? '선택된 날짜 없음'
+                  : '${selectedDate!.year}-${selectedDate!.month}-${selectedDate!.day}',
+            ),
             const SizedBox(height: 15),
 
             Container(
