@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../widgets/book_card.dart';
 import '../database/app_database.dart';
 import '../di/locator.dart';
+import 'add_book_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
@@ -47,18 +48,15 @@ class HomeScreen extends StatelessWidget {
         },
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          await db.createBook(
-            BooksCompanion.insert(
-              title: '데미안',
-              author: '헤르만 헤세',
-              readDate: DateTime.now(),
-              rating: 5,
-              memo: '테스트 데이터',
-              status: '읽음',
-            ),
-          );
-        },
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) => const AddBookScreen(),
+              ),
+            );
+          },
+
         child: const Icon(Icons.add),
       ),
     );
