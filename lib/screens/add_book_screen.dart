@@ -16,6 +16,8 @@ class _AddBookScreenState extends State<AddBookScreen> {
 
   String status = '읽음';
 
+  DateTime? selectedDate;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,6 +32,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
               controller: titleController,
               decoration: const InputDecoration(
                 labelText: '책 제목',
+                border: OutlineInputBorder(),
               ),
             ),
 
@@ -39,6 +42,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
               controller: authorController,
               decoration: const InputDecoration(
                 labelText: '저자',
+                border: OutlineInputBorder(),
               ),
             ),
 
@@ -46,8 +50,10 @@ class _AddBookScreenState extends State<AddBookScreen> {
 
             TextField(
               controller: memoController,
+              maxLines: 3,
               decoration: const InputDecoration(
                 labelText: '한줄 감상',
+                border: OutlineInputBorder(),
               ),
             ),
 
@@ -74,34 +80,53 @@ class _AddBookScreenState extends State<AddBookScreen> {
               ),
             ),
 
-            DropdownButton<String>(
-              value: status,
-              items: const [
-                DropdownMenuItem(
-                  value: '읽음',
-                  child: Text('읽음'),
-                ),
-                DropdownMenuItem(
-                  value: '읽는 중',
-                  child: Text('읽는 중'),
-                ),
-                DropdownMenuItem(
-                  value: '읽고 싶어요',
-                  child: Text('읽고 싶어요'),
-                ),
-              ],
-              onChanged: (value) {
-                setState(() {
-                  status = value!;
-                });
-              },
+            Text(
+              '$rating점',
+            ),
+
+            const SizedBox(height: 15),
+
+            ElevatedButton(
+              onPressed: () {},
+              child: const Text('읽은 날짜 선택'),
+            ),
+
+            const SizedBox(height: 15),
+
+            Container(
+              padding: const EdgeInsets.all(10),
+              child: DropdownButton<String>(
+                value: status,
+                items: const [
+                  DropdownMenuItem(
+                    value: '읽음',
+                    child: Text('읽음'),
+                  ),
+                  DropdownMenuItem(
+                    value: '읽는 중',
+                    child: Text('읽는 중'),
+                  ),
+                  DropdownMenuItem(
+                    value: '읽고 싶어요',
+                    child: Text('읽고 싶어요'),
+                  ),
+                ],
+                onChanged: (value) {
+                  setState(() {
+                    status = value!;
+                  });
+                },
+              ),
             ),
 
             const SizedBox(height: 20),
 
-            ElevatedButton(
-              onPressed: () {},
-              child: const Text('저장'),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: () {},
+                child: const Text('저장'),
+              ),
             ),
           ],
         ),

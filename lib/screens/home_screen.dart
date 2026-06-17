@@ -6,6 +6,7 @@ import 'add_book_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
+
   final db = getIt<LocalDatabase>();
 
   @override
@@ -17,7 +18,6 @@ class HomeScreen extends StatelessWidget {
       body: StreamBuilder<List<Book>>(
         stream: db.watchBooks(),
         builder: (context, snapshot) {
-
           if (!snapshot.hasData) {
             return const Center(
               child: CircularProgressIndicator(),
@@ -48,15 +48,14 @@ class HomeScreen extends StatelessWidget {
         },
       ),
       floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (_) => const AddBookScreen(),
-              ),
-            );
-          },
-
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => const AddBookScreen(),
+            ),
+          );
+        },
         child: const Icon(Icons.add),
       ),
     );
