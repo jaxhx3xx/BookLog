@@ -11,17 +11,6 @@ void main() async {
 
   final db = getIt<LocalDatabase>();
 
-  await db.createBook(
-    BooksCompanion.insert(
-      title: '해리포터',
-      author: 'J.K. 롤링',
-      readDate: DateTime.now(),
-      rating: 5,
-      memo: '재밌었다',
-      status: '읽음',
-    ),
-  );
-
   runApp(const MyApp());
 }
 

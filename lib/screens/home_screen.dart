@@ -47,7 +47,18 @@ class HomeScreen extends StatelessWidget {
         },
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () async {
+          await db.createBook(
+            BooksCompanion.insert(
+              title: '데미안',
+              author: '헤르만 헤세',
+              readDate: DateTime.now(),
+              rating: 5,
+              memo: '테스트 데이터',
+              status: '읽음',
+            ),
+          );
+        },
         child: const Icon(Icons.add),
       ),
     );
