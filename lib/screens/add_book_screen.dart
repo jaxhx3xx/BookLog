@@ -1,4 +1,9 @@
+import '../database/app_database.dart';
+import '../di/locator.dart';
 import 'package:flutter/material.dart';
+import '../database/app_database.dart';
+import '../di/locator.dart';
+import 'package:drift/drift.dart' hide Column;
 
 class AddBookScreen extends StatefulWidget {
   const AddBookScreen({super.key});
@@ -8,6 +13,9 @@ class AddBookScreen extends StatefulWidget {
 }
 
 class _AddBookScreenState extends State<AddBookScreen> {
+  final db = getIt<LocalDatabase>();
+
+
   final titleController = TextEditingController();
   final authorController = TextEditingController();
   final memoController = TextEditingController();
@@ -124,7 +132,28 @@ class _AddBookScreenState extends State<AddBookScreen> {
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () async {
+
+                  if (titleController.text.isEmpty ||
+                      authorController.text.isEmpty ||
+                      memoController.text.isEmpty) {
+                    return;
+                  }
+
+                  await db.createBook(
+                    BooksCompanion.insert(
+                      title: titleController.text,
+                      author: authorController.text,
+                      readDate: selectedDate ?? DateTime.now(),
+                      rating: rating,
+                      memo: memoController.text,
+                      status: status,
+                    ),
+                  );
+
+                  Navigator.pop(context);
+                },
+
                 child: const Text('저장'),
               ),
             ),
